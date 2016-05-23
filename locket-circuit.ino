@@ -10,7 +10,8 @@ int lastButtonState = 0;
 int buttonPushCounter = 0;
 
 int brightness = 0;
-int fadeAmt = 85;
+int fadeAmt = 10;
+int fadeFactor = 1;
 
 // SETUP
 void setup() {
@@ -32,7 +33,7 @@ void loop() {
       if (buttonPushCounter < 3) {
         buttonPushCounter++;
 
-        brightness = brightness + fadeAmt;
+        brightness = brightness + fadeAmt * fadeFactor;
         analogWrite(ledPin, brightness);
       
         Serial.println("on");
@@ -40,6 +41,10 @@ void loop() {
         Serial.println(buttonPushCounter);
 
         Serial.println(brightness);
+        Serial.println("factor");
+        Serial.println(fadeFactor);
+
+        fadeFactor = fadeFactor * 4;
       }
       else {
         analogWrite(ledPin, 0);
@@ -60,18 +65,4 @@ void loop() {
   else {
   }
   lastButtonState = buttonState;
-  
-  /*if (buttonState == HIGH) {
-    //digitalWrite(ledPin, HIGH);
-    analogWrite(ledPin, brightness);
-    brightness = brightness + fadeAmt;
-    
-    digitalWrite(motoPin, HIGH);
-    delay(250);
-   
-  } else {
-    // turn LED off:
-    digitalWrite(ledPin, LOW);
-    digitalWrite(motoPin,LOW);
-  }*/
 }
